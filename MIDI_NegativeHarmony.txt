@@ -1,0 +1,56 @@
+desc: MIDI Negative Harmony
+desc: MIDI Negative Harmony v1 [radian]
+//tags: MIDI processing mapping
+//author: Radian
+
+slider1:0<0,12,1{0:C,1:C#,2:D,3:D#,4:E,5:F,6:F#,7:G,8:G#,9:A,10:A#,11:B}>Original Major Key
+
+in_pin:none
+out_pin:none
+
+////////////////////////////////////////////////////////////////////////////////
+@init
+
+statNoteOn = $x90;
+statNoteOff = $x80;
+
+////////////////////////////////////////////////////////////////////////////////
+@slider
+
+originalRoot = slider1 + 60.0
+
+////////////////////////////////////////////////////////////////////////////////
+@block
+
+// https://www.reaper.fm/sdk/js/midi.php#js_midi
+
+while
+(
+  midirecv(offset, msg1, msg23) ?
+  (  
+    // Extract message type and channel
+    status = msg1 & $xF0;
+    channel = msg1 & $x0F;
+
+    // Is it a note event?
+    status == statNoteOn || status == statNoteOff ?
+    (
+      // Extract note value
+      note = msg23 & $x7F;
+
+      // Update mapping sliders
+      slider3 = note; sliderchange(slider3);
+      slider4 = map[note]; sliderchange(slider4);
+
+      // Substitute note value and pass on modified message
+      midisend(offset, msg1, (msg23 & $xFF00) | map[note]);
+      
+    )
+    :
+    (
+      midisend(offset, msg1, msg23); // Not a note, pass thru
+    );
+    
+    1; // Force loop to continue until all messages have been processed
+  );
+);
