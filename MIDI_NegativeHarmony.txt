@@ -38,12 +38,8 @@ while
       // Extract note value
       note = msg23 & $x7F;
 
-      // Update mapping sliders
-      slider3 = note; sliderchange(slider3);
-      slider4 = map[note]; sliderchange(slider4);
-
       // Substitute note value and pass on modified message
-      midisend(offset, msg1, (msg23 & $xFF00) | map[note]);
+      midisend(offset, msg1, (msg23 & $xFF00) | map[note]);  // <- do the thing here.
       
     )
     :
