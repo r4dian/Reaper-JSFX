@@ -2,8 +2,9 @@ desc: MIDI Negative Harmony
 desc: MIDI Negative Harmony v1 [radian]
 //tags: MIDI processing mapping
 //author: Radian
+//https://www.quora.com/What-is-negative-harmony-in-music
 
-slider1:0<0,12,1{0:C,1:C#,2:D,3:D#,4:E,5:F,6:F#,7:G,8:G#,9:A,10:A#,11:B}>Original Major Key
+slider1:0<0,12,1{0:C,1:C#,2:D,3:D#,4:E,5:F,6:F#,7:G,8:G#,9:A,10:A#,11:B}>Original Key Root
 
 in_pin:none
 out_pin:none
@@ -11,7 +12,7 @@ out_pin:none
 ////////////////////////////////////////////////////////////////////////////////
 @init
 
-statNoteOn = $x90;
+statNoteOn  = $x90;
 statNoteOff = $x80;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +24,6 @@ originalRoot = slider1 + 60.0
 @block
 
 // https://www.reaper.fm/sdk/js/midi.php#js_midi
-
 while
 (
   midirecv(offset, msg1, msg23) ?
@@ -39,8 +39,7 @@ while
       note = msg23 & $x7F;
 
       // Substitute note value and pass on modified message
-      midisend(offset, msg1, (msg23 & $xFF00) | map[note]);  // <- do the thing here.
-      
+      midisend(offset, msg1, (msg23 & $xFF00) | map[note]);  // <- do the thing here. ( https://www.reaper.fm/sdk/js/basiccode.php#js_ops )
     )
     :
     (
