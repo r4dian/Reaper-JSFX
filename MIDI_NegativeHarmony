@@ -15,18 +15,18 @@ out_pin:none
 statNoteOn  = $x90;
 statNoteOff = $x80;
 
-initialMap[0]   = 7; // C->G
-initialMap[1]  = 5; // C#->F#
-initialMap[2]  = 3; // D->F
-initialMap[3]  = 1; // Eb
-initialMap[4]  = -1; // E
+initialMap[0]  = -5; // C->G
+initialMap[1]  = 5;  // C#->F#
+initialMap[2]  = 3;  // D->F
+initialMap[3]  = 1;  // Eb->E
+initialMap[4]  = -1; // E->Eb // TODO : It shouldn't change the 3rd of the original key's root chord (e.g. the E of Cmaj) ...cc to switch ? Just remember to play (root)-minor ?
 initialMap[5]  = -3; // F-D
 initialMap[6]  = -5; // F#->C#
-initialMap[7]  = -7; // G->C
-initialMap[8]  = -9; // G#->B
-initialMap[9]  = -11; // A->Bb
-initialMap[10] = 11; // Bb->A
-initialMap[11] = 9; // B->G#
+initialMap[7]  = -7; // G->C - 5th making a big jump down gets better results than a small jump up
+initialMap[8]  = 3;  // G#->B
+initialMap[9]  = -11;// A->Bb - I expect the same is true of the 7th as the 5th...
+initialMap[10] = -1; // Bb->A
+initialMap[11] = -3; // B->G#
 
 ////////////////////////////////////////////////////////////////////////////////
 @slider
