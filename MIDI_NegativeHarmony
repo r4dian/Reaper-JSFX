@@ -15,10 +15,29 @@ out_pin:none
 statNoteOn  = $x90;
 statNoteOff = $x80;
 
+initialMap[0]   = 7; // C->G
+initialMap[1]  = 5; // C#->F#
+initialMap[2]  = 3; // D->F
+initialMap[3]  = 1; // Eb
+initialMap[4]  = -1; // E
+initialMap[5]  = -3; // F-D
+initialMap[6]  = -5; // F#->C#
+initialMap[7]  = -7; // G->C
+initialMap[8]  = -9; // G#->B
+initialMap[9]  = -11; // A->Bb
+initialMap[10] = 11; // Bb->A
+initialMap[11] = 9; // B->G#
+
 ////////////////////////////////////////////////////////////////////////////////
 @slider
 
-originalRoot = slider1 + 60.0
+originalRoot = slider1;
+
+while
+(
+  map[i] = initialMap[(i + originalRoot) % 12];
+  (i += 1) < 128;
+);
 
 ////////////////////////////////////////////////////////////////////////////////
 @block
@@ -39,7 +58,7 @@ while
       note = msg23 & $x7F;
 
       // Substitute note value and pass on modified message
-      midisend(offset, msg1, (msg23 & $xFF00) | map[note]);  // <- do the thing here. ( https://www.reaper.fm/sdk/js/basiccode.php#js_ops )
+      midisend(offset, msg1, (msg23 & $xFF00) | note + map[note]); 
     )
     :
     (
