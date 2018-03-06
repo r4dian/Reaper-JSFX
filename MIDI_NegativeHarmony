@@ -52,17 +52,17 @@ originalRoot         = slider1;
 useNearestEquivalent = slider2;
 preserveThirds       = slider3;
 
-useNearestEquivalent == 1 ?
+useNearestEquivalent ?
 (
-  initialMap = initialNearestMap;
+  initialMap = initialNearestMap
 ) : (
-  initialMap = initialFullMap; // TODO: Doesn't work?
+  initialMap = initialFullMap; // TODO: Doesn't work? Its the semicolon.
 );
 
 i = 0;
 while
 (
-  preserveThirds == 1 & i % 12 == 3 | i % 12 == 4 ? // TODO: Doesn't work?
+  preserveThirds == 1 && i % 12 == 3 || i % 12 == 4 ? // TODO: Doesn't work? Bitwise operators instead of logical operators
   (
     map[i] = 0;
   ) : (
