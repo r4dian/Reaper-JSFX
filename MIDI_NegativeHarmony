@@ -1,3 +1,4 @@
+desc: MIDI Negative Harmony
 desc: MIDI Negative Harmony v1 [radian]
 //tags: MIDI processing mapping
 //author: Radian
@@ -52,25 +53,20 @@ originalRoot         = slider1;
 useNearestEquivalent = slider2;
 preserveThirds       = slider3;
 
-useNearestEquivalent ?
+initialMap = ( useNearestEquivalent ? initialNearestMap : initialFullMap );
+
+preserveThirds ?
 (
-  initialMap = initialNearestMap
-) : (
-  initialMap = initialFullMap; // TODO: Doesn't work? Its the semicolon.
+  initialMap[3] = 0;
+  initialMap[4] = 0;
 );
 
 i = 0;
 while
 (
-  preserveThirds == 1 && i % 12 == 3 || i % 12 == 4 ? // TODO: Doesn't work? Bitwise operators instead of logical operators
-  (
-    map[i] = 0;
-  ) : (
-    map[i] = initialMap[(i - originalRoot) % 12]; 
-  );
+  map[i] = initialMap[(i - originalRoot) % 12]; 
   (i += 1) < 128; 
 );
-
 
 ////////////////////////////////////////////////////////////////////////////////
 @block
@@ -97,7 +93,6 @@ while
     (
       midisend(offset, msg1, msg23); // Not a note, pass thru
     );
-    
     1; // Force loop to continue until all messages have been processed
   );
 );
