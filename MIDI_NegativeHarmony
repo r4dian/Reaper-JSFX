@@ -7,7 +7,7 @@ desc: MIDI Negative Harmony v1 [radian]
 // Original Key
 slider1:0<0,12,1{0:C,1:C#,2:D,3:D#,4:E,5:F,6:F#,7:G,8:G#,9:A,10:A#,11:B}>Original Key Root
 // Move to the nearst negative note e.g. A up to Bb or move all around the "Axis" of negative harmony (e.g. A moves 11 semitones down to Bb)
-slider2:0<0,1,1{0:Full Negation,1:Nearest}>Use Nearest Negative Equivalent
+slider2:1<0,1,1{0:Full Negation,1:Nearest}>Use Nearest Negative Equivalent
 // Preserve 3rds e.g. so you can still play the I chord of original key
 slider3:0<0,1,1{0:No,1:Yes}>Preserve Original Key iii and III
 
